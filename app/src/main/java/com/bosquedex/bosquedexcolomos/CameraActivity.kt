@@ -56,7 +56,7 @@ class CameraActivity : AppCompatActivity() {
 
 
         //Ardillas
-        //val imagenACargar = "Ardilla.jpeg"
+        val imagenACargar = "Ardilla.jpeg"
         // val imagenACargar = "cosa2.png"
         //val imagenACargar = "cosa3.png"
 
@@ -65,7 +65,7 @@ class CameraActivity : AppCompatActivity() {
         //val imagenACargar = "Bejuquilla (25).jpeg"
 
         //CarpaChina
-        val imagenACargar = "CarpaChina (1037).jpg"
+        //val imagenACargar = "CarpaChina (1037).jpg"
         //val imagenACargar = "CarpaChina (1038).jpg"
 
         //CarpaComunEuropea
