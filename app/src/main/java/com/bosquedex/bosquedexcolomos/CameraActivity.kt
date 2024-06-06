@@ -92,7 +92,7 @@ class CameraActivity : AppCompatActivity() {
         //Modelo de Ardillas y Ranas
         //val modelo = "model_savedV13.ptl"
         //modelo 10 clases de animales
-        val modelo = "model_savedV18.ptl"
+        val modelo = "model_savedV19.ptl"
 
         /**
         try {
@@ -210,7 +210,7 @@ class CameraActivity : AppCompatActivity() {
 
         //val clases = arrayOf("Gato", "Perro")
         //val clases = arrayOf("Ardilla", "Rana")
-        val clases = arrayOf("Ardilla", "Bejuquilla", "CarpaChina", "CarpaEuropea", "CarpinteroCheje", "ColibriVerde", "GarsaBlanca", "IguanaVerde",  "RanaToro", "TlacuacheNortegno")
+        val clases = arrayOf("AbaniquilloPagnueloPacifico", "AlicanteCentro", "ArdillaRoca", "Bejuquilla", "CarpaChina", "CarpaComunEuropea", "CarpinteroCheje", "ColibriVerde", "ConejoSerrano", "GarsaBlanca", "IguanaVerde", "LagartoEscorpionDeArizona", "MurcielagoFrutero", "PalomaDomestica", "PatoReal", "RanaFisgonaDeslumbrante", "RanaLadradoraCostegna", "RanaLeopardoNeovolcanica", "RanaLeopardoNoroeste", "RanaToro", "SerpienteCiegaAfroasiatica", "TlacuacheNortegno", "TortugaPechoQuebradoMexicana", "ZanateMayor")
 
         // searching for the index with maximum score
         var maxScore = -Float.MAX_VALUE
