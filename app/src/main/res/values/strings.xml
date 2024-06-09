@@ -15,4 +15,5 @@
     <string name="btnIdentificarFauna">Identificar Fauna</string>
     <string name="btnCapturar">Capturar</string>
     <string name="btnIdentificar">Identificar</string>
+    <string name="title_coleccion_activity">coleccion_activity</string>
 </resources>
