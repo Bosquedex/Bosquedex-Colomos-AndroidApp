@@ -175,6 +175,9 @@ class CameraActivity : AppCompatActivity() {
             }
         }
 
+        if(clases[maxScoreIdx]=="ArdillaRoca") {
+            Utilidades.completarLogro(Utilidades.achievement1Key, applicationContext)
+        }
         return clases[maxScoreIdx]
 
     }
@@ -206,6 +209,8 @@ class CameraActivity : AppCompatActivity() {
             Log.e("AssetError", "Error reading assets (Module)", e)
             finish()
         }
+
+
         return module
     }
 
