@@ -1,15 +1,27 @@
 package com.bosquedex.bosquedexcolomos
 
+import android.Manifest
+import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.app.Instrumentation.ActivityResult
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.*
+import androidx.core.content.ContextCompat
 
 import com.bosquedex.bosquedexcolomos.databinding.ActivityCameraBinding
 import org.pytorch.IValue
@@ -30,25 +42,14 @@ class CameraActivity : AppCompatActivity() {
         /**
         var bitmap: Bitmap? = null
         var module: Module? = null
-         **/ val imageView = findViewById<ImageView>(R.id.imageView)
+          val imageView = findViewById<ImageView>(R.id.imageView)
+         **/
 
-
-
-        /***
-        // Code below is for checking that load + tensor convert to float + normalization is the same here and in Android
-        // Code below is for checking that load + tensor convert to float + normalization is the same here and in Android
-        val assetImage = BitmapFactory.decodeFile(assetFilePath2(this, "Ardilla.jpeg"))
-        val tensor = TensorImageUtils.bitmapToFloat32Tensor(
-        assetImage,
-        TensorImageUtils.TORCHVISION_NORM_MEAN_RGB,
-        TensorImageUtils.TORCHVISION_NORM_STD_RGB,
-        MemoryFormat.CHANNELS_LAST
-        )
-
-        Log.i("image", "\"inputTensor[100,200,0] = \"  ${tensor.dataAsFloatArray[0 + 100 * 3 + 200 * 3 * 720]}")
-        Log.i("image", "\"inputTensor[44,123,2] = \"  ${tensor.dataAsFloatArray[2 + 44 * 3 + 123 * 3 * 720]}")
-
-         ***/
+        if (!arePermissionsGranted()) {
+            requestPermissions(
+                this, Camera.CAMERA_PERMISSION, 100
+            )
+        }
 
 
 
@@ -91,52 +92,6 @@ class CameraActivity : AppCompatActivity() {
         //modelo 10 clases de animales
         val modelo = "model_savedV19.ptl"
 
-        /**
-        try {
-        // creating bitmap from packaged into app android asset 'image.jpg',
-        // app/src/main/assets/image.jpg
-        bitmap = BitmapFactory.decodeStream(assets.open(imagenACargar))
-        module = LiteModuleLoader.load(assetFilePath(this, modelo))
-        // loading serialized torchscript module from packaged into app android asset model.pt,
-        // app/src/model/assets/model.pt
-
-        imageView.setImageBitmap(bitmap)
-
-        } catch (e: IOException) {
-        Log.e("PytorchHelloWorld", "Error reading assets", e)
-        finish()
-        }
-
-
-
-
-
-
-        // running the model
-        val outputTensor = module!!.forward(IValue.from(inputTensor)).toTensor()
-
-        // getting tensor content as java array of floats
-        val scores = outputTensor.dataAsFloatArray
-
-
-
-        //val clases = arrayOf("Gato", "Perro")
-        //val clases = arrayOf("Ardilla", "Rana")
-        val clases = arrayOf("Ardilla", "Bejuquilla", "CarpaChina", "CarpaEuropea", "CarpinteroCheje", "ColibriVerde", "GarsaBlanca", "IguanaVerde",  "RanaToro", "TlacuacheNortegno")
-
-        // searching for the index with maximum score
-        var maxScore = -Float.MAX_VALUE
-        var maxScoreIdx = -1
-        Log.i("score", "-------------------------------------------------------------------")
-        for (n in scores.indices) {
-        Log.i("score", "Clase ${clases[n]} de ${imagenACargar}: ${scores[n].toString()}")
-        if (scores[n] > maxScore) {
-        maxScore = scores[n]
-        maxScoreIdx = n
-        }
-        }
-
-         **/
         /*
         val className: String
         if(maxScore>.6){
@@ -148,41 +103,39 @@ class CameraActivity : AppCompatActivity() {
         //val className: String = ImageNetClasses.IMAGENET_CLASSES.get(maxScoreIdx)
         */
 
-        val randomBtn = findViewById<Button>(R.id.btnRandom)
+        val randomBtn = findViewById<Button>(R.id.btnIdentificar)
         val resultTv = findViewById<TextView>(R.id.textViewResult)
+        val imgView = findViewById<ImageButton>(R.id.imageView)
 
-        imageView.setImageBitmap(createBitmap(imagenACargar))
-        //val imageView = findViewById<ImageView>(R.id.imageView)
+        val imageContract = registerForActivityResult(ActivityResultContracts.GetContent()){
+            imgView.setImageURI(it)
+        }
+
+        imgView.setImageBitmap(createBitmap(imagenACargar))
+
+        imgView.setOnClickListener{
+
+            if (!arePermissionsGranted()) {
+                requestPermissions(
+                    this, Camera.CAMERA_PERMISSION, 100
+                )
+            }
+            imageContract
+        registerForActivityResult(ActivityResultContracts.GetContent()){
+                imgView.setImageURI(it)
+            }
+        }
+
         randomBtn.setOnClickListener {
+            imageContract
             resultTv.text = createPrediction(modelo, imagenACargar)
-
+            randomBtn.text = "Identificado"
         }
 
 
 
 
-
-
-
-
-
     }
-
-
-
-
-
-    /***
-    fun getBytesFromBitmap(bitmap: Bitmap?): ByteArray? {
-    if (bitmap != null) {
-    val stream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
-    return stream.toByteArray()
-    }
-    return null
-    }
-     ***/
-
 
     private fun createPrediction(modelo:String, imagenACargar:String ):String {
 
@@ -256,7 +209,31 @@ class CameraActivity : AppCompatActivity() {
         return module
     }
 
+    /*val READIMAGE:Int=5
+    fun checkPermission(){
+        if(Build.VERSION.SDK_INT>=23){
+            if(checkSelfPermission(this, READ_MEDIA_IMAGES) !=
+                PackageManager.PERMISSION_GRANTED){
+                requestPermissions(arrayOf(READ_MEDIA_IMAGES), READIMAGE)
+                return
+            }
 
+        }
+    }*/
+    fun arePermissionsGranted(): Boolean {
+        return mediaPermission.all { perssion ->
+            ContextCompat.checkSelfPermission(
+                applicationContext,
+                perssion
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    companion object {
+        val mediaPermission = arrayOf(
+            READ_MEDIA_IMAGES
+        )
+    }
 }
 
 fun assetFilePath(context: Context, asset: String): String {
