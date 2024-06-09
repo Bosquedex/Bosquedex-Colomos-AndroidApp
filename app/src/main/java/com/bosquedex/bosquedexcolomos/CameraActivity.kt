@@ -175,8 +175,8 @@ class CameraActivity : AppCompatActivity() {
             }
         }
 
-
         return clases[maxScoreIdx]
+
     }
 
     private fun createBitmap(imagenACargar:String): Bitmap? {
@@ -234,6 +234,7 @@ class CameraActivity : AppCompatActivity() {
             READ_MEDIA_IMAGES
         )
     }
+
 }
 
 fun assetFilePath(context: Context, asset: String): String {

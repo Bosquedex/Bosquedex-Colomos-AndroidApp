@@ -11,7 +11,6 @@ class ColeccionActivity : AppCompatActivity() {
     private val sharedPrefFile = "achievements"
     private val achievement1Key = "ACHIEVEMENT_1"
     private val achievement2Key = "ACHIEVEMENT_2"
-    private val achievement3Key = "ACHIEVEMENT_3"
 
     private lateinit var imageView1: ImageView
     private lateinit var imageView2: ImageView
@@ -19,6 +18,8 @@ class ColeccionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coleccion)
+
+        completarLogro(achievement1Key)
 
         // Initialize image views
         imageView1 = findViewById(R.id.imageView1)
@@ -31,10 +32,20 @@ class ColeccionActivity : AppCompatActivity() {
     private fun loadAchievementStatuses() {
         val sharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
 
+        val achievement1Completed = sharedPreferences.getBoolean(achievement1Key, false)
         val achievement2Completed = sharedPreferences.getBoolean(achievement2Key, false)
-        val achievement3Completed = sharedPreferences.getBoolean(achievement3Key, false)
 
-        imageView1.visibility = if (achievement2Completed) View.VISIBLE else View.GONE
-        imageView2.visibility = if (achievement3Completed) View.VISIBLE else View.GONE
+        imageView1.visibility = if (achievement1Completed) View.VISIBLE else View.GONE
+        imageView2.visibility = if (achievement2Completed) View.VISIBLE else View.GONE
     }
+
+    //Esta funcion completa un logro, segun la Key que le metas, en este caso achievement1Key para completar el logro 1
+
+    private fun completarLogro(logroKey: String) {
+        val sharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(logroKey, true)
+        editor.apply()
+    }
+
 }
