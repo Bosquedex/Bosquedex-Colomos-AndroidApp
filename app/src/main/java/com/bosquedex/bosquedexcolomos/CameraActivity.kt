@@ -191,8 +191,31 @@ class CameraActivity : AppCompatActivity() {
             }
         }
 
-        if(clases[maxScoreIdx]=="ArdillaRoca") {
-            Utilidades.completarLogro(Utilidades.achievement1Key, applicationContext)
+        when(clases[maxScoreIdx]) {
+            "AbaniquilloPagnueloPacifico" ->Utilidades.completarLogro(Utilidades.achievement1Key, applicationContext)
+            "AlicanteCentro" ->Utilidades.completarLogro(Utilidades.achievement2Key, applicationContext)
+            "ArdillaRoca"  ->Utilidades.completarLogro(Utilidades.achievement3Key, applicationContext)
+            "Bejuquilla"  ->Utilidades.completarLogro(Utilidades.achievement4Key, applicationContext)
+            "CarpaChina"  ->Utilidades.completarLogro(Utilidades.achievement5Key, applicationContext)
+            "CarpaComunEuropea"  ->Utilidades.completarLogro(Utilidades.achievement6Key, applicationContext)
+            "CarpinteroCheje"  ->Utilidades.completarLogro(Utilidades.achievement7Key, applicationContext)
+            "ColibriVerde" ->Utilidades.completarLogro(Utilidades.achievement8Key, applicationContext)
+            "ConejoSerrano" ->Utilidades.completarLogro(Utilidades.achievement9Key, applicationContext)
+            "GarsaBlanca"  ->Utilidades.completarLogro(Utilidades.achievement10Key, applicationContext)
+            "IguanaVerde" ->Utilidades.completarLogro(Utilidades.achievement11Key, applicationContext)
+            "LagartoEscorpionDeArizona"  ->Utilidades.completarLogro(Utilidades.achievement12Key, applicationContext)
+            "MurcielagoFrutero"  ->Utilidades.completarLogro(Utilidades.achievement13Key, applicationContext)
+            "PalomaDomestica"  ->Utilidades.completarLogro(Utilidades.achievement14Key, applicationContext)
+            "PatoReal"  ->Utilidades.completarLogro(Utilidades.achievement15Key, applicationContext)
+            "RanaFisgonaDeslumbrante"  ->Utilidades.completarLogro(Utilidades.achievement16Key, applicationContext)
+            "RanaLadradoraCostegna"  ->Utilidades.completarLogro(Utilidades.achievement17Key, applicationContext)
+            "RanaLeopardoNeovolcanica"  ->Utilidades.completarLogro(Utilidades.achievement18Key, applicationContext)
+            "RanaLeopardoNoroeste"  ->Utilidades.completarLogro(Utilidades.achievement19Key, applicationContext)
+            "RanaToro"  ->Utilidades.completarLogro(Utilidades.achievement20Key, applicationContext)
+            "SerpienteCiegaAfroasiatica"  ->Utilidades.completarLogro(Utilidades.achievement21Key, applicationContext)
+            "TlacuacheNortegno"  ->Utilidades.completarLogro(Utilidades.achievement22Key, applicationContext)
+            "TortugaPechoQuebradoMexicana" ->Utilidades.completarLogro(Utilidades.achievement23Key, applicationContext)
+            "ZanateMayor" ->Utilidades.completarLogro(Utilidades.achievement24Key, applicationContext)
         }
         return clases[maxScoreIdx]
 
