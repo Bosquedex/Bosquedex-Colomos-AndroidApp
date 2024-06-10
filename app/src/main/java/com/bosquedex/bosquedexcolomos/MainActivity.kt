@@ -14,18 +14,23 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         val btnActivity1 = findViewById<Button>(R.id.btnActivity1)
-        //val btnActivity2 = findViewById<Button>(R.id.btnActivity2)
+        val btnActivity2 = findViewById<Button>(R.id.btnActivity2)
         val btnActivity3 = findViewById<Button>(R.id.btnActivity3)
-        //val btnActivity4 = findViewById<Button>(R.id.btnActivity4)
-        //val btnActivity5 = findViewById<Button>(R.id.btnActivity5)
 
         btnActivity1.setOnClickListener {
-            val intent = Intent(this, CameraActivity::class.java)
-            startActivity(intent)
+            val intent1 = Intent(this, Camera::class.java)
+            startActivity(intent1)
         }
+
+
+        btnActivity2.setOnClickListener {
+            val intent2 = Intent(this, CameraActivity::class.java)
+            startActivity(intent2)
+        }
+
         btnActivity3.setOnClickListener {
-            val intent = Intent(this, ColeccionActivity::class.java)
-            startActivity(intent)
+            val intent3 = Intent(this, ColeccionActivity::class.java)
+            startActivity(intent3)
         }
     }
 }
