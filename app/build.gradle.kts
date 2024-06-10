@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.bosquedex.bosquedexcolomos"
-        minSdk = 33
+        minSdk = 30
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -54,6 +54,8 @@ android {
 
 dependencies {
 
+    implementation (libs.activity)
+
     implementation (libs.pytorch.android.lite)
     implementation (libs.pytorch.android.torchvision.lite)
 
@@ -74,6 +76,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.media3.transformer)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

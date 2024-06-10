@@ -1,13 +1,20 @@
 package com.bosquedex.bosquedexcolomos
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.Manifest.permission.READ_MEDIA_VIDEO
+import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.app.Instrumentation.ActivityResult
+import android.content.ContentResolver
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,14 +23,18 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
+import androidx.media3.transformer.AssetLoader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-import com.bosquedex.bosquedexcolomos.databinding.ActivityCameraBinding
 import org.pytorch.IValue
 import org.pytorch.LiteModuleLoader
 import org.pytorch.MemoryFormat
@@ -36,6 +47,21 @@ import java.io.InputStream
 
 class CameraActivity : AppCompatActivity() {
 
+    lateinit var randomBtn:Button
+    lateinit var resultTv:TextView
+    lateinit var imgView:ImageButton
+
+    var imagenACargar = "Ardilla.jpeg"
+    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
+        if(uri!=null){
+            //val bitmap2: Bitmap =ImageDecoder.decodeBitmap(source)
+            imgView.setImageURI(uri)
+        }else{
+            //No image
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
@@ -45,16 +71,12 @@ class CameraActivity : AppCompatActivity() {
           val imageView = findViewById<ImageView>(R.id.imageView)
          **/
 
-        if (!arePermissionsGranted()) {
-            requestPermissions(
-                this, Camera.CAMERA_PERMISSION, 100
-            )
-        }
+
 
 
 
         //Ardillas
-        val imagenACargar = "Ardilla.jpeg"
+
         // val imagenACargar = "cosa2.png"
         //val imagenACargar = "cosa3.png"
 
@@ -103,28 +125,20 @@ class CameraActivity : AppCompatActivity() {
         //val className: String = ImageNetClasses.IMAGENET_CLASSES.get(maxScoreIdx)
         */
 
-        val randomBtn = findViewById<Button>(R.id.btnIdentificar)
-        val resultTv = findViewById<TextView>(R.id.textViewResult)
-        val imgView = findViewById<ImageButton>(R.id.imageView)
+        randomBtn = findViewById(R.id.btnIdentificar)
+        resultTv = findViewById(R.id.textViewResult)
+        imgView = findViewById(R.id.imageView)
 
         val imageContract = registerForActivityResult(ActivityResultContracts.GetContent()){
             imgView.setImageURI(it)
         }
 
-        imgView.setImageBitmap(createBitmap(imagenACargar))
+        //Crea el bitmap de una imagen precargada
+        //imgView.setImageBitmap(createBitmap(imagenACargar))
 
         imgView.setOnClickListener{
-
-            if (!arePermissionsGranted()) {
-                requestPermissions(
-                    this, Camera.CAMERA_PERMISSION, 100
-                )
+             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
-            imageContract
-        registerForActivityResult(ActivityResultContracts.GetContent()){
-                imgView.setImageURI(it)
-            }
-        }
 
         randomBtn.setOnClickListener {
             imageContract
@@ -140,7 +154,9 @@ class CameraActivity : AppCompatActivity() {
     private fun createPrediction(modelo:String, imagenACargar:String ):String {
 
         val module = createModule(modelo)
-        val bitmap = createBitmap(imagenACargar)
+        //val bitmap = createBitmap(imagenACargar)
+        val bitmap = createBitmap()
+
 
         //image to tensor
         val inputTensor = TensorImageUtils.bitmapToFloat32Tensor(
@@ -168,7 +184,7 @@ class CameraActivity : AppCompatActivity() {
 
         Log.i("score", "-------------------------------------------------------------------")
         for (n in scores.indices) {
-            Log.i("score", "Clase ${clases[n]} de ${imagenACargar}: ${scores[n].toString()}")
+            Log.i("score", "Clase ${clases[n]} de Imagen: ${scores[n]}")
             if (scores[n] > maxScore) {
                 maxScore = scores[n]
                 maxScoreIdx = n
@@ -185,8 +201,21 @@ class CameraActivity : AppCompatActivity() {
     private fun createBitmap(imagenACargar:String): Bitmap? {
         var bitmap: Bitmap? = null
         try {
+            val bitmap2:Bitmap = Bitmap.createBitmap(imgView.drawToBitmap())
 
             bitmap = BitmapFactory.decodeStream(assets.open(imagenACargar))
+
+        }catch (e: IOException){
+
+            Log.e("AssetError", "Error reading assets (Bitmap)", e)
+            finish()
+        }
+        return bitmap
+    }
+    private fun createBitmap(): Bitmap? {
+        var bitmap: Bitmap? = null
+        try {
+            bitmap = Bitmap.createBitmap(imgView.drawToBitmap())
 
         }catch (e: IOException){
 
@@ -225,20 +254,6 @@ class CameraActivity : AppCompatActivity() {
 
         }
     }*/
-    fun arePermissionsGranted(): Boolean {
-        return mediaPermission.all { perssion ->
-            ContextCompat.checkSelfPermission(
-                applicationContext,
-                perssion
-            ) == PackageManager.PERMISSION_GRANTED
-        }
-    }
-
-    companion object {
-        val mediaPermission = arrayOf(
-            READ_MEDIA_IMAGES
-        )
-    }
 
 }
 
