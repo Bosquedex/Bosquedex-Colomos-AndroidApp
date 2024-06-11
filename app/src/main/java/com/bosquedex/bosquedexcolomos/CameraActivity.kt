@@ -28,12 +28,13 @@ class CameraActivity : AppCompatActivity() {
     lateinit var randomBtn:Button
     lateinit var resultTv:TextView
     lateinit var imgView:ImageButton
-
+    lateinit var imgPhantom:ImageButton
     var imagenACargar = null
     val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
         if(uri!=null){
             //val bitmap2: Bitmap =ImageDecoder.decodeBitmap(source)
             imgView.setImageURI(uri)
+            imgPhantom.setImageURI(uri)
             randomBtn.setText("Identificar")
             resultTv.setText("Imagen Cargada")
         }else{
@@ -56,10 +57,12 @@ class CameraActivity : AppCompatActivity() {
         randomBtn = findViewById(R.id.btnIdentificar)
         resultTv = findViewById(R.id.textViewResult)
         imgView = findViewById(R.id.imageView)
+        imgPhantom = findViewById(R.id.phantomView)
 
-        val imageContract = registerForActivityResult(ActivityResultContracts.GetContent()){
-            imgView.setImageURI(it)
-        }
+       // val imageContract = registerForActivityResult(ActivityResultContracts.GetContent()){
+           // imgView.setImageURI(it)
+            //imgPhantom.setImageURI(it)
+       // }
 
         //Crea el bitmap de una imagen precargada
         //imgView.setImageBitmap(createBitmap(imagenACargar))
@@ -72,7 +75,7 @@ class CameraActivity : AppCompatActivity() {
 
         randomBtn.setOnClickListener {
             if (randomBtn.text == "Identificar") {
-                imageContract
+           //     imageContract
                 resultTv.text = createPrediction(modelo, imagenACargar)
                 if (resultTv.text == "NI") {
                     randomBtn.text = "No Identificado"
@@ -178,7 +181,7 @@ class CameraActivity : AppCompatActivity() {
     private fun createBitmap(): Bitmap? {
         var bitmap: Bitmap? = null
         try {
-            bitmap = Bitmap.createBitmap(imgView.drawToBitmap())
+            bitmap = Bitmap.createBitmap(imgPhantom.drawToBitmap())
 
         }catch (e: IOException){
 
