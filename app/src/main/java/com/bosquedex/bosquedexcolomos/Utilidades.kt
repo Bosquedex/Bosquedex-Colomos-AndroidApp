@@ -37,7 +37,7 @@ object Utilidades {
     fun completarLogro(logroKey: String, context: Context) {
         val sharedPreferences = context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putBoolean(logroKey, false)
+        editor.putBoolean(logroKey, true)
         editor.apply()
     }
 }
