@@ -1,40 +1,18 @@
 package com.bosquedex.bosquedexcolomos
 
-import android.Manifest
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.READ_MEDIA_IMAGES
-import android.Manifest.permission.READ_MEDIA_VIDEO
-import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
-import android.app.Instrumentation.ActivityResult
-import android.content.ContentResolver
-import android.content.ContentUris
+
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.*
-import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
-import androidx.media3.transformer.AssetLoader
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-
 import org.pytorch.IValue
 import org.pytorch.LiteModuleLoader
 import org.pytorch.MemoryFormat
@@ -51,13 +29,15 @@ class CameraActivity : AppCompatActivity() {
     lateinit var resultTv:TextView
     lateinit var imgView:ImageButton
 
-    var imagenACargar = "Ardilla.jpeg"
+    var imagenACargar = null
     val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
         if(uri!=null){
             //val bitmap2: Bitmap =ImageDecoder.decodeBitmap(source)
             imgView.setImageURI(uri)
+            randomBtn.setText("Identificar")
+            resultTv.setText("Imagen Cargada")
         }else{
-            //No image
+            resultTv.setText("Ingresa una imagen")
         }
     }
 
@@ -71,59 +51,7 @@ class CameraActivity : AppCompatActivity() {
           val imageView = findViewById<ImageView>(R.id.imageView)
          **/
 
-
-
-
-
-        //Ardillas
-
-        // val imagenACargar = "cosa2.png"
-        //val imagenACargar = "cosa3.png"
-
-        //Bejuquillas
-        //val imagenACargar = "Bejuquilla (24).jpeg"
-        //val imagenACargar = "Bejuquilla (25).jpeg"
-
-        //CarpaChina
-        //val imagenACargar = "CarpaChina (1037).jpg"
-        //val imagenACargar = "CarpaChina (1038).jpg"
-
-        //CarpaComunEuropea
-        //val imagenACargar = "CarpaComunEuropea (2671).jpeg"
-        //val imagenACargar = "CarpaComunEuropea (2672).jpeg"
-
-
-        //CarpinteroCheje
-
-        //ColibriVerde
-
-        //GarsaBlanca
-
-        //IguanaVerde
-
-        //Ranas
-        // val imagenACargar = "Rana.jpeg"
-        // val imagenACargar = "Rana2.jpg"
-
-        //TlacuacheNortegno
-
-        //Modelo de gatos y perros
-        //val modelo = "my_model.ptl"
-        //Modelo de Ardillas y Ranas
-        //val modelo = "model_savedV13.ptl"
-        //modelo 10 clases de animales
         val modelo = "model_savedV19.ptl"
-
-        /*
-        val className: String
-        if(maxScore>.6){
-            className = "Ardilla"
-        }else{
-            className = "Rana"
-        }
-
-        //val className: String = ImageNetClasses.IMAGENET_CLASSES.get(maxScoreIdx)
-        */
 
         randomBtn = findViewById(R.id.btnIdentificar)
         resultTv = findViewById(R.id.textViewResult)
@@ -137,21 +65,28 @@ class CameraActivity : AppCompatActivity() {
         //imgView.setImageBitmap(createBitmap(imagenACargar))
 
         imgView.setOnClickListener{
+
              pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+
             }
 
         randomBtn.setOnClickListener {
-            imageContract
-            resultTv.text = createPrediction(modelo, imagenACargar)
-            randomBtn.text = "Identificado"
+            if (randomBtn.text == "Identificar") {
+                imageContract
+                resultTv.text = createPrediction(modelo, imagenACargar)
+                if (resultTv.text == "NI") {
+                    randomBtn.text = "No Identificado"
+                } else {
+                    randomBtn.text = "Identificado"
+                }
+            }
         }
-
 
 
 
     }
 
-    private fun createPrediction(modelo:String, imagenACargar:String ):String {
+    private fun createPrediction(modelo:String, imagenACargar:String? ):String {
 
         val module = createModule(modelo)
         //val bitmap = createBitmap(imagenACargar)
@@ -182,6 +117,7 @@ class CameraActivity : AppCompatActivity() {
         var maxScore = -Float.MAX_VALUE
         var maxScoreIdx = -1
 
+
         Log.i("score", "-------------------------------------------------------------------")
         for (n in scores.indices) {
             Log.i("score", "Clase ${clases[n]} de Imagen: ${scores[n]}")
@@ -189,6 +125,10 @@ class CameraActivity : AppCompatActivity() {
                 maxScore = scores[n]
                 maxScoreIdx = n
             }
+        }
+
+        if (maxScore < .4){
+            return "NI"
         }
 
         when(clases[maxScoreIdx]) {
@@ -265,18 +205,6 @@ class CameraActivity : AppCompatActivity() {
 
         return module
     }
-
-    /*val READIMAGE:Int=5
-    fun checkPermission(){
-        if(Build.VERSION.SDK_INT>=23){
-            if(checkSelfPermission(this, READ_MEDIA_IMAGES) !=
-                PackageManager.PERMISSION_GRANTED){
-                requestPermissions(arrayOf(READ_MEDIA_IMAGES), READIMAGE)
-                return
-            }
-
-        }
-    }*/
 
 }
 
