@@ -5,64 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:screenOrientation="portrait"
     tools:context=".CameraActivity">
+        <ImageButton
+          android:id="@+id/imageView"
+          android:layout_width="240dp"
+          android:layout_height="240dp"
+          android:layout_gravity="center"
+          android:layout_marginTop="100dp"
+          android:background="@color/material_dynamic_primary80"
+          android:contentDescription="Inserta una imagen de la galería"
+          android:hint="Click para agregar"
+          android:maxWidth="240dp"
+          android:maxHeight="240dp"
+          android:scaleType="fitXY"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:srcCompat="@android:drawable/ic_menu_gallery"
+          tools:layout_editor_absoluteY="137dp" />
 
+        <TextView
+            android:layout_marginTop="50dp"
+            android:id="@+id/textViewResult"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="40sp"
+            android:textAlignment="center"
+            android:text="Inserte una imagen" />
 
-    <ImageButton
-        android:id="@+id/imageView"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:background="@color/material_dynamic_primary80"
-        android:contentDescription="Inserta una imagen de la galería"
-        android:hint="Click para agregar"
-        android:maxWidth="240dp"
-        android:maxHeight="240dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
-        tools:layout_editor_absoluteY="137dp" />
+        <Button
+            android:id="@+id/btnIdentificar"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="100dp"
+            android:backgroundTint="#76B8FE"
+            android:text="@string/btnIdentificar"
+            android:contentDescription="zzz"
+            android:accessibilityLiveRegion="polite"
+            android:textSize="25sp" />
 
-    <TextView
-        android:layout_marginTop="50dp"
-
-        android:id="@+id/textViewResult"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="40sp"
-        android:textAlignment="center"
-        android:text="Inserte una imagen" />
-
-    <Button
-        android:id="@+id/btnIdentificar"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="#76B8FE"
-        android:text="@string/btnIdentificar"
-        android:contentDescription="zzz"
-        android:accessibilityLiveRegion="polite"
-        android:textSize="25sp" />
-
-    <ImageButton
-        android:visibility="invisible"
-        android:id="@+id/phantomView"
-        android:layout_width="224dp"
-        android:layout_height="224dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:background="@color/material_dynamic_primary80"
-        android:contentDescription="Inserta una imagen de la galería"
-        android:hint="Click para agregar"
-        android:maxWidth="224dp"
-        android:maxHeight="224dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
-        tools:layout_editor_absoluteY="137dp" />
+        <ImageButton
+            android:visibility="invisible"
+            android:id="@+id/phantomView"
+            android:layout_width="224dp"
+            android:layout_height="224dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:background="@color/material_dynamic_primary80"
+            android:contentDescription="Inserta una imagen de la galería"
+            android:hint="Click para agregar"
+            android:maxWidth="224dp"
+            android:maxHeight="224dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_gallery"
+            tools:layout_editor_absoluteY="137dp" />
 
 </LinearLayout>
