@@ -59,6 +59,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Pop"
+            android:theme="@style/Base.Theme.BosquedexColomos.CustomTheme"
+
+
+            />
 
 
     </application>

@@ -1,6 +1,7 @@
 package com.bosquedex.bosquedexcolomos
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -8,16 +9,27 @@ import androidx.appcompat.app.AppCompatActivity
 
 class ColeccionActivity : AppCompatActivity() {
 
-    private lateinit var imageView1: ImageView
-    private lateinit var imageView2: ImageView
+    private lateinit var imageButton1: ImageView
+    private lateinit var imageButton2: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coleccion)
+        val info1 = Intent(this, Pop::class.java)
 
-        // Initialize image views
-        imageView1 = findViewById(R.id.imageView1)
-        imageView2 = findViewById(R.id.imageView2)
+        // Initialize button views
+        imageButton1 = findViewById(R.id.imageButton1)
+        imageButton2 = findViewById(R.id.imageButton2)
+
+        imageButton1.setOnClickListener {
+            info1.putExtra("message","Boton 1 Seleccionado")
+            startActivity(info1)
+        }
+
+        imageButton2.setOnClickListener {
+            info1.putExtra("message","Boton 2 Seleccionado")
+            startActivity(info1)
+        }
 
         // Load achievement statuses
         loadAchievementStatuses()
@@ -51,7 +63,7 @@ class ColeccionActivity : AppCompatActivity() {
         val achievement23Completed = sharedPreferences.getBoolean(Utilidades.achievement23Key, false)
         val achievement24Completed = sharedPreferences.getBoolean(Utilidades.achievement24Key, false)
 
-        imageView1.visibility = if (achievement1Completed) View.VISIBLE else View.GONE
-        imageView2.visibility = if (achievement2Completed) View.VISIBLE else View.GONE
+        imageButton1.visibility = if (achievement1Completed) View.VISIBLE else View.GONE
+        imageButton2.visibility = if (achievement2Completed) View.VISIBLE else View.GONE
     }
 }

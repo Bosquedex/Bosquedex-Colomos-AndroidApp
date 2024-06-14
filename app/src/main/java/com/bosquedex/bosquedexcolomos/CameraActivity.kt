@@ -160,6 +160,7 @@ class CameraActivity : AppCompatActivity() {
             "TortugaPechoQuebradoMexicana" ->Utilidades.completarLogro(Utilidades.achievement23Key, applicationContext)
             "ZanateMayor" ->Utilidades.completarLogro(Utilidades.achievement24Key, applicationContext)
         }
+
         return clases[maxScoreIdx]
 
     }
