@@ -22,7 +22,14 @@ class ColeccionActivity : AppCompatActivity() {
         imageButton2 = findViewById(R.id.imageButton2)
 
         imageButton1.setOnClickListener {
-            info1.putExtra("message","Boton 1 Seleccionado")
+            info1.putExtra("nombre","Abaniquillo Pañuelo del Pacífico/Anolis nebulosus")
+            info1.putExtra("descripcion","Lagarto de aprox 32-55mm, grisaceo marron, con un apendice similar a un abanico verde, del cual se desconoce su esperanza de vida exacta")
+            info1.putExtra("habitat","Endemico de la costa del pacifico de Mexico")
+            info1.putExtra("dieta","Se alimenta de insectos, otros artropodos o incluso su propia piel desprendida")
+            info1.putExtra("comportamiento","Diurnos arboreos, suelen ser agresivos para defender su territorio")
+            info1.putExtra("reproduccion","Oviparos, ponen huevos en epocas de lluvias")
+            info1.putExtra("conservacion","En Preocupacion Menor")
+            info1.putExtra("curiosidad","Pueden desprender su cola para escapar de los depredadores, y luego les crece una nueva")
             startActivity(info1)
         }
 

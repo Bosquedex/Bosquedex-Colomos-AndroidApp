@@ -18,8 +18,22 @@ class Pop : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_popp)
 
-        texto=findViewById(R.id.textView1)
-        texto.text = intent.getStringExtra("message")
+        texto=findViewById(R.id.nombre)
+        texto.text = intent.getStringExtra("nombre")
+        texto=findViewById(R.id.descripcion)
+        texto.text = intent.getStringExtra("descripcion")
+        texto=findViewById(R.id.habitat)
+        texto.text = intent.getStringExtra("habitat")
+        texto=findViewById(R.id.dieta)
+        texto.text = intent.getStringExtra("dieta")
+        texto=findViewById(R.id.comportamiento)
+        texto.text = intent.getStringExtra("comportamiento")
+        texto=findViewById(R.id.reproduccion)
+        texto.text = intent.getStringExtra("reproduccion")
+        texto=findViewById(R.id.conservacion)
+        texto.text = intent.getStringExtra("conservacion")
+        texto=findViewById(R.id.curiosidad)
+        texto.text = intent.getStringExtra("curiosidad")
 
         val dm = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(dm)
@@ -27,7 +41,7 @@ class Pop : AppCompatActivity() {
         val width = dm.widthPixels
         val height = dm.heightPixels
 
-        window.setLayout((width * 0.8).toInt(), (height * 0.6).toInt())
+        window.setLayout((width * 0.8).toInt(), (height * 0.7).toInt())
 
     }
 }
