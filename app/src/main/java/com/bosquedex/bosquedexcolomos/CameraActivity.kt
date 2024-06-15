@@ -52,7 +52,7 @@ class CameraActivity : AppCompatActivity() {
           val imageView = findViewById<ImageView>(R.id.imageView)
          **/
 
-        val modelo = "model_savedV19.ptl"
+        val modelo = "model_savedV20.ptl"
 
         randomBtn = findViewById(R.id.btnIdentificar)
         resultTv = findViewById(R.id.textViewResult)
