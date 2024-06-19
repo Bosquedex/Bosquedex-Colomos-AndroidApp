@@ -52,7 +52,7 @@ class CameraActivity : AppCompatActivity() {
           val imageView = findViewById<ImageView>(R.id.imageView)
          **/
 
-        val modelo = "model_savedV20.ptl"
+        val modelo = "model_savedV21.ptl"
 
         randomBtn = findViewById(R.id.btnIdentificar)
         resultTv = findViewById(R.id.textViewResult)
@@ -130,7 +130,7 @@ class CameraActivity : AppCompatActivity() {
             }
         }
 
-        if (maxScore < .4){
+        if (maxScore < .6){
             return "NI"
         }
 
