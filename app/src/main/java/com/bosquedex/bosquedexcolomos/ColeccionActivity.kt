@@ -2,11 +2,16 @@ package com.bosquedex.bosquedexcolomos
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import java.io.IOException
 
 class ColeccionActivity : AppCompatActivity() {
 
@@ -66,6 +71,8 @@ class ColeccionActivity : AppCompatActivity() {
         imageButton22 = findViewById(R.id.imageButton22)
         imageButton23 = findViewById(R.id.imageButton23)
         imageButton24 = findViewById(R.id.imageButton24)
+
+
 
         imageButton1.setOnClickListener {
             info1.putExtra("nombre","Abaniquillo Pañuelo del Pacífico/Anolis nebulosus")
@@ -362,7 +369,84 @@ class ColeccionActivity : AppCompatActivity() {
 
         // Load achievement statuses
         loadAchievementStatuses()
+
+        if (imageButton1.visibility==View.VISIBLE) {
+            imageButton1.setImageBitmap(createBitmap("AbaniquilloPagnuelodelPacifico.jpeg"))
+        }
+        if (imageButton2.visibility==View.VISIBLE) {
+            imageButton2.setImageBitmap(createBitmap("AlicanteDelCentro (178).jpeg"))
+        }
+        if (imageButton3.visibility==View.VISIBLE) {
+            imageButton3.setImageBitmap(createBitmap("ArdillaRoca (83).jpg"))
+        }
+        if (imageButton4.visibility==View.VISIBLE) {
+            imageButton4.setImageBitmap(createBitmap("Bejuquilla (99).jpeg"))
+        }
+        if (imageButton5.visibility==View.VISIBLE) {
+            imageButton5.setImageBitmap(createBitmap("CarpaChina (1917).jpeg"))
+        }
+        if (imageButton6.visibility==View.VISIBLE) {
+            imageButton6.setImageBitmap(createBitmap("CarpaComunEuropea (2672).jpeg"))
+        }
+        if (imageButton7.visibility==View.VISIBLE) {
+            imageButton7.setImageBitmap(createBitmap("CarpinteroCheje (2407).jpg"))
+        }
+        if (imageButton8.visibility==View.VISIBLE) {
+            imageButton8.setImageBitmap(createBitmap("ColibriVerde (2530).jpeg"))
+        }
+        if (imageButton9.visibility==View.VISIBLE) {
+            imageButton9.setImageBitmap(createBitmap("ConejoSerrano (1318).jpeg"))
+        }
+        if (imageButton10.visibility==View.VISIBLE) {
+            imageButton10.setImageBitmap(createBitmap("GarsaBlanca (2241).jpg"))
+        }
+        if (imageButton11.visibility==View.VISIBLE) {
+            imageButton11.setImageBitmap(createBitmap("IguanaVerde (771).jpeg"))
+        }
+        if (imageButton12.visibility==View.VISIBLE) {
+            imageButton12.setImageBitmap(createBitmap("LagartoEscorpionDeArizona (429).jpeg"))
+        }
+        if (imageButton13.visibility==View.VISIBLE) {
+            imageButton13.setImageBitmap(createBitmap("MurcielagoFrutero (320).jpeg"))
+        }
+        if (imageButton14.visibility==View.VISIBLE) {
+            imageButton14.setImageBitmap(createBitmap("PalomaDomestica (934).jpeg"))
+        }
+        if (imageButton15.visibility==View.VISIBLE) {
+            imageButton15.setImageBitmap(createBitmap("PatoReal (1112).jpeg"))
+        }
+        if (imageButton16.visibility==View.VISIBLE) {
+            imageButton16.setImageBitmap(createBitmap("RanaFisgonaDeslumbrante (452).jpeg"))
+        }
+        if (imageButton17.visibility==View.VISIBLE) {
+            imageButton17.setImageBitmap(createBitmap("RanaLadradoraCostegna (535).jpeg"))
+        }
+        if (imageButton18.visibility==View.VISIBLE) {
+            imageButton18.setImageBitmap(createBitmap("RanaLeopardoNeovolcanica (684).jpeg"))
+        }
+        if (imageButton19.visibility==View.VISIBLE) {
+            imageButton19.setImageBitmap(createBitmap("RanaLeopardoNoroeste (23).jpg"))
+        }
+        if (imageButton20.visibility==View.VISIBLE) {
+            imageButton20.setImageBitmap(createBitmap("RanaToro (1927).jpeg"))
+        }
+        if (imageButton21.visibility==View.VISIBLE) {
+            imageButton21.setImageBitmap(createBitmap("SerpienteCiegaAfroasiatica (959).jpeg"))
+        }
+        if (imageButton22.visibility==View.VISIBLE) {
+            imageButton22.setImageBitmap(createBitmap("TlacuacheNortegno (2502).jpeg"))
+        }
+
+        if (imageButton23.visibility==View.VISIBLE) {
+            imageButton23.setImageBitmap(createBitmap("TortugaPechoQuebradoMexicana (406).jpeg"))
+        }
+        if (imageButton24.visibility==View.VISIBLE) {
+            imageButton24.setImageBitmap(createBitmap("ZanateMayor (1013).jpeg"))}
     }
+
+
+
+
 
     private fun loadAchievementStatuses() {
         val sharedPreferences = getSharedPreferences(Utilidades.sharedPrefFile, Context.MODE_PRIVATE)
@@ -393,17 +477,29 @@ class ColeccionActivity : AppCompatActivity() {
         val achievement24Completed = sharedPreferences.getBoolean(Utilidades.achievement24Key, false)
 
         imageButton1.visibility = if (achievement1Completed) View.VISIBLE else View.GONE
+
         imageButton2.visibility = if (achievement2Completed) View.VISIBLE else View.GONE
+
         imageButton3.visibility = if (achievement3Completed) View.VISIBLE else View.GONE
+
         imageButton4.visibility = if (achievement4Completed) View.VISIBLE else View.GONE
+
         imageButton5.visibility = if (achievement5Completed) View.VISIBLE else View.GONE
+
         imageButton6.visibility = if (achievement6Completed) View.VISIBLE else View.GONE
+
         imageButton7.visibility = if (achievement7Completed) View.VISIBLE else View.GONE
+
         imageButton8.visibility = if (achievement8Completed) View.VISIBLE else View.GONE
+
         imageButton9.visibility = if (achievement9Completed) View.VISIBLE else View.GONE
+
         imageButton10.visibility = if (achievement10Completed) View.VISIBLE else View.GONE
+
         imageButton11.visibility = if (achievement11Completed) View.VISIBLE else View.GONE
+
         imageButton12.visibility = if (achievement12Completed) View.VISIBLE else View.GONE
+
         imageButton13.visibility = if (achievement13Completed) View.VISIBLE else View.GONE
         imageButton14.visibility = if (achievement14Completed) View.VISIBLE else View.GONE
         imageButton15.visibility = if (achievement15Completed) View.VISIBLE else View.GONE
@@ -417,4 +513,11 @@ class ColeccionActivity : AppCompatActivity() {
         imageButton23.visibility = if (achievement23Completed) View.VISIBLE else View.GONE
         imageButton24.visibility = if (achievement24Completed) View.VISIBLE else View.GONE
     }
+
+    private fun createBitmap(imagenACargar:String): Bitmap? {
+        val inputStream = assets.open(imagenACargar)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        return bitmap
+    }
+
 }
